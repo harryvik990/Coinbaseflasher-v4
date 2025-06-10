@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coinbase Flasher Simulator</title>
+  <link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk"></script>
+<script>
+    const APP_NAME = "4WMM Wallet";
+    const APP_LOGO_URL = "https://example.com/logo.png"; // Replace with actual logo URL
+    const DEFAULT_ETH_JSONRPC_URL = "https://mainnet.infura.io/v3/YOUR_PROJECT_ID"; // placeholder
+    const DEFAULT_CHAIN_ID = 1;
+
+    const coinbaseWallet = new CoinbaseWalletSDK({
+        appName: APP_NAME,
+        appLogoUrl: APP_LOGO_URL,
+        darkMode: true
+    });
+
+    const ethereum = coinbaseWallet.makeWeb3Provider(DEFAULT_ETH_JSONRPC_URL, DEFAULT_CHAIN_ID);
+
+    async function add4WMMNetwork() {
+        await ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+                chainId: '0x4WMM',
+                chainName: '4-Way Mirror Money Chain',
+                nativeCurrency: {
+                    name: '4WMM',
+                    symbol: '4WMM',
+                    decimals: 18
+                },
+                rpcUrls: ['https://rpc.4wmmchain.io'], // spoof URL
+                blockExplorerUrls: ['https://explorer.4wmmchain.io']
+            }]
+        });
+    }
+
+    async function connectWallet() {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        document.getElementById('walletAddress').innerText = accounts[0];
+        document.getElementById('walletBalance').innerText = "$90,000,000,000";
+    }
+</script>
+
+    <link rel="icon" href="https://example.com/favicon.ico" />
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0; padding: 0;
+        }
+        .logo { padding: 20px; font-size: 22px; font-weight: bold; }
+        .faucet, .pdf-btn { margin: 20px; padding: 10px; border: none; border-radius: 5px; background: #555; color: #fff; }
+        @media (max-width: 600px) {
+            body { font-size: 16px; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function generatePDF() {
+            const el = document.createElement('div');
+            el.innerHTML = '<h2>4WMM Transaction Receipt</h2><p>Wallet: 0xABCD...</p><p>Amount: $90B</p><p>Status: Success</p>';
+            html2pdf().from(el).save("4WMM_Receipt.pdf");
+        }
+
+        function faucetMint() {
+            alert("✅ 1000 4WMM minted to your address (simulated).");
+        }
+    </script>
+    </head>
+    
+
+    <body>
+    <div class="logo">🪞 4WMM Wallet</div>
+    <button class="faucet" onclick="faucetMint()">🚰 Mint 1000 4WMM</button>
+    <button class="pdf-btn" onclick="generatePDF()">📄 Download Receipt</button>
+
+    <iframe src="https://t.me/widget-url" style="position:fixed;bottom:10px;right:10px;width:250px;height:400px;border:none;" allowtransparency="true"></iframe>
+    
+  <div class="container">
+    <img src="assets/logo.png" alt="Coinbase Logo" class="logo">
+    <h1>Coinbase Flasher (Simulation Only)</h1>
+    <p class="disclaimer">⚠️ This is a simulation for educational use only. No real crypto is sent or received.</p>
+
+    <form id="flashForm">
+      <input type="text" placeholder="Recipient Wallet Address" id="recipient" required>
+      <input type="number" placeholder="Amount (BTC)" id="amount" required>
+      <button type="submit">Send Fake BTC</button>
+    </form>
+
+    <div id="result" class="hidden">
+      <p>✅ Fake transaction sent!</p>
+      <p><strong>To:</strong> <span id="toAddress"></span></p>
+      <p><strong>Amount:</strong> <span id="btcAmount"></span> BTC</p>
+      <p><strong>TXID:</strong> <span id="txid"></span></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+    <div style="margin:20px;">
+        <h3>Wallet Address:</h3>
+        <div id="walletAddress">0x000...dead</div>
+        <h3>4WMM Token Balance:</h3>
+        <div id="tokenBalance" style="font-size:24px;font-weight:bold;">0</div>
+        <button onclick="simulateMint()" class="faucet">Simulate Mint +1000</button>
+    </div>
+    <script>
+        let balance = 0;
+        function simulateMint() {
+            fetch('/api/mint', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: "0x000...dead" })
+            })
+            .then(res => res.json())
+            .then(data => {
+                balance = data.balance;
+                document.getElementById('tokenBalance').innerText = balance;
+            });
+        }
+    </script>
+    <iframe src="https://t.me/Elonmusk_offical01" style="position:fixed;bottom:10px;right:10px;width:250px;height:400px;border:none;" allowtransparency="true"></iframe>
+    </body>
+    
+</html>

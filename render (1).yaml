@@ -1,0 +1,14 @@
+# Exported from Render on 2025-06-21T09:42:40Z
+databases:
+- name: 'Fb archive crypto '
+  databaseName: fb_archive_crypto
+  user: fb_archive_crypto_user
+  plan: free
+  region: ohio
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  - source: 212.52.23.71/32
+    description: Tesla (Harryvik990@gmail.com)
+  postgresMajorVersion: "16"
+version: "1"
